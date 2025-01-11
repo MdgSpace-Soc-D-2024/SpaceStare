@@ -5,15 +5,13 @@
 import { Math, Scene } from 'phaser';
 import { Player } from '../gameObjects/Player';
 import { Asteroid } from '../gameObjects/Asteroid';
-import WebGazerTracker from '../WebGazer';
-
-var webGazerTracker;
 
 export class Game extends Scene
 {
     constructor ()
     {
         super('Game');
+        this.gazeY = 400;
     }
 
     spawn(){
@@ -29,8 +27,8 @@ export class Game extends Scene
 
         // Creating a new player object and passing this scene as parameter.
         this.player = new Player({scene: this});
-        this.cursors = this.input.keyboard.createCursorKeys();
 
+        this.cursors = this.input.keyboard.createCursorKeys();
         this.cursors.space.on('down', ()=>{
             this.player.shoot();
         });
@@ -70,26 +68,28 @@ export class Game extends Scene
             rock.destroy();
         });
 
-        webGazerTracker = new WebGazerTracker();
-        webGazerTracker.startTracking();
+        //setting listener for prediction data
+        webgazer.setGazeListener((data, elapsedTime) =>{
+            if(data){
+                this.gazeY = data.y;
+            }    
+        });
     }
 
     update(){
         //Playing the background animation
         this.background.anims.play("bg", true);
 
-        const gaze = webGazerTracker.getGazeCoordinates();
-        gaze.y = Phaser.Math.Clamp(gaze.y, 0, 1024);
+        // Clamping the prediction value and passing it to player move function
+        this.gazeY = Phaser.Math.Clamp(this.gazeY, 0, 1024);
+        this.player.move(this.gazeY);
 
-        console.log(gaze.y);
-
-        this.player.move(gaze.y);
-
+        // Pause/Resume for webgazer
         if(this.input.keyboard.addKey('p').isDown){
-            webGazerTracker.pause();
+            webgazer.pause();
         }
         else if (this.input.keyboard.addKey('r').isDown){
-            webGazerTracker.resume();
+            webgazer.resume();
         }
     }
 }

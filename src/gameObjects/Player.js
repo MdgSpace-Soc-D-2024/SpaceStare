@@ -29,9 +29,6 @@ export class Player extends Physics.Arcade.Image {
     }
 
     move(gazeY){
-
-        console.log("this is the players y: %d", this.y);
-        
         if(gazeY > this.y+175){
             this.setVelocityY(160);
         }
@@ -48,7 +45,6 @@ export class Player extends Physics.Arcade.Image {
         if(bullet){
             bullet.fire(this.x +80 , this.y+48);
         }
-        
     }
 
     damage(){

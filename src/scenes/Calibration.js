@@ -28,7 +28,9 @@ export class Calibration extends Scene{
         .setOrigin(0.5, 0.5)
         .setAlpha(0.8)
         .setInteractive()
-        .on("pointerdown", () => {this.scene.start("StartScene");});
+        .on("pointerdown", () => {
+            this.scene.start("StartScene");
+        });
         this.add.text(this.scale.width/2, this.scale.height/5*4 +10, "Back", {color:'#000000'}).setOrigin(0.5, 0.5);
     }
 }

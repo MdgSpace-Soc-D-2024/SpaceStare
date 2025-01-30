@@ -53,6 +53,5 @@ export class Player extends Physics.Arcade.Image {
         if(this.health == 3) this.setTexture("ship2");
         else if(this.health == 2) this.setTexture("ship3");
         else if (this.health == 1) this.setTexture("ship4");
-        else {console.log("game is over");};
     }
 }

@@ -29,9 +29,6 @@ export class Asteroid extends GameObjects.Sprite
         this.x = Math.Wrap(this.x, 0, 1124);
         this.y = Math.Wrap(this.y, -70, 550);
 
-        if (this.x < 10){
-            this.destroyRock();
-        }
     }
     
     destroyRock(){

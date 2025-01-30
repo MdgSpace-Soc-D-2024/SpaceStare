@@ -121,6 +121,13 @@ export class Game extends Scene
         this.input.keyboard.on('keydown-R', () => webgazer.resume());
         
         this.startFaceMesh();
+
+        this.time.addEvent({
+            delay: 100,
+            callback: () => {this.createLandmarks();},
+            callbackScope: this,
+            loop: true
+        });
     }
 
     update(){
@@ -137,6 +144,17 @@ export class Game extends Scene
             this.spawnTimer = 0; // Reset timer
         }
         
-        this.createLandmarks();
+        this.rocks.getChildren().forEach((gameobject) => {
+            if(gameobject.x < 19){
+                gameobject.destroyRock();
+                this.player.damage();
+            }
+        });
+
+        if(this.player.health == 0){
+            this.scene.start("EndScene");
+            this.registry.set('score', this.score);
+            webgazer.pause();
+        }
     }
 }

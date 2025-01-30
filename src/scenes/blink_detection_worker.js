@@ -12,7 +12,7 @@ self.onmessage =  (event) =>{
     leftEAR = (dist(key[159], key[145]) + dist(key[160], key[144])) / (2* dist(key[33], key[133]));
     rightEAR = (dist(key[386], key[374]) + dist(key[387], key[373])) / (2* dist(key[263], key[362]));
 
-    if(leftEAR < BlinkThreshhold && BlinkThreshhold  || rightEAR < 0.23 ){
+    if(leftEAR < BlinkThreshhold  || rightEAR < BlinkThreshhold ){
         self.postMessage('Blink-Detected');
     }
 }
